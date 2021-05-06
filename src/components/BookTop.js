@@ -12,7 +12,7 @@ function BookTop(props) {
                 backgroundImage:`url(${props.image.smallThumbnail})`
             }}
             className="book-cover"></div>
-            <ShelfChanger shelves={props.shelves} />
+            <ShelfChanger currShelf={props.currShelf} shelves={props.shelves} />
 
         </div>
     )

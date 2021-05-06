@@ -5,13 +5,24 @@ function ShelfChanger(props) {
         <div className="book-shelf-changer">
             <select>
 
-            <option value="move" disabled>Move to...</option>
+            <option style={{
+                fontWeight:'Bold',
+                color:'white',
+                backgroundColor:'black'
+                }}
+                value="move"
+                disabled>Move to...</option>
                 {props.shelves.map((shelf, i) => (
-                    <option value={shelf.value} key={`shelf-${i}`}>
-                        {shelf.title}
+                    <option
+                    disabled={props.currShelf === shelf.value}
+                    value={shelf.value}
+                    key={`shelf-${i}`}>
+                       {
+                        props.currShelf === shelf.value && '✓'
+                    } {shelf.title}
                     </option>
                 ))}
-            <option value="none">None</option>
+            <option style={{color:'red'}} value="none">None</option>
             </select>
         </div>
     )

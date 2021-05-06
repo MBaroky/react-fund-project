@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css';
-import BooksList from './components/BooksList';
+import Home from './pages/Home';
 
 function App() {
   const [booksList, setbooksList] = useState([]);
@@ -17,18 +17,7 @@ function App() {
     });
   }, []);
   return (
-    <div className="App">
-      <div className="list-books">
-          <div className="list-books-title">
-            <h1>MyReads</h1>
-          </div>
-        {shelves.map(shelf => {
-          let booksListPerShelf = booksList.filter(book => book.shelf === shelf.value)
-          return <BooksList key={shelf.value} shelf={shelf} list={booksListPerShelf} shelves={shelves} />
-        })}
-      </div>
-
-    </div>
+    <Home shelves={shelves} booksList={booksList} />
   );
 }
 

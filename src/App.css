@@ -183,6 +183,13 @@ button:active {
   opacity: 0;
   cursor: pointer;
 }
+.book-shelf-changer select option.curr{
+  background-color:#999;
+}
+.book-shelf-changer select option.curr:before{
+  content:"\2713";
+
+}
 
 /* book cover */
 
