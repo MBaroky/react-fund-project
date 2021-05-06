@@ -5,7 +5,9 @@ function BooksList(props) {
     const {list} = props
     return (
         <div className="bookshelf">
+            {/* current shelf title */}
             <h2 className="bookshelf-title">{props.shelf.title}</h2>
+            {/* list of books in this shelf */}
             <div className="bookshelf-books">
                 <ol className="books-grid">
                     {list.map(book => (
