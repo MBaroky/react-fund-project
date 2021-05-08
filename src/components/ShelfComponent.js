@@ -1,6 +1,6 @@
 // import React from 'react'
 
-import shelvesNames from '../components/ShelvesNames'
+import shelvesNames from '../ShelvesNames'
 import BooksList from "./BooksList";
 
 function ShelComponent(props) {

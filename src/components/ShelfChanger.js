@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react'
 import * as BooksAPI from '../BooksAPI'
-import shelvesNames from '../components/ShelvesNames'
+import shelvesNames from '../ShelvesNames'
 
 
 
