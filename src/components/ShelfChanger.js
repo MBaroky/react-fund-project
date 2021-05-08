@@ -1,8 +1,20 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useState, useRef} from 'react'
 import * as BooksAPI from '../BooksAPI'
 import shelvesNames from '../ShelvesNames'
 
+const useSelectChange = (shelf, book, setshelves) => {
+    const hasJustMounted = useRef(true);
+    useEffect(() => {
 
+        hasJustMounted.current
+        ? hasJustMounted.current = false
+        : shelf !== book.shelf && BooksAPI.update(book, shelf)
+            .then(res => {
+                !res.error &&
+                setshelves(res)
+            })
+    }, [shelf, book, setshelves]);
+}
 
 function ShelfChanger(props) {
 
@@ -10,12 +22,8 @@ function ShelfChanger(props) {
     const [shelf, setshelf] = useState(book.shelf);
 
 
-    useEffect(() => {
-        shelf !== book.shelf && BooksAPI.update(book, shelf)
-            .then(res => {
-                setshelves(res)
-            })
-    }, [shelf, book, setshelves]);
+
+    useSelectChange(shelf, book, setshelves)
 
 
     return (
@@ -28,7 +36,10 @@ function ShelfChanger(props) {
             }
             <select
             defaultValue='move'
-            onChange={(e)=>{setshelf(e.target.value)}}
+            onChange={(e)=>{
+                setshelf(e.target.value);
+
+            }}
             >
 
             <option style={{
