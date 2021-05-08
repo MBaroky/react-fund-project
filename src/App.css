@@ -16,6 +16,31 @@ body, .app {
   margin: 0 auto;
 }
 
+/* Clearable text inputs */
+.resetable{
+  position: relative;
+  display: inline-block;
+}
+.resetable input[type=text]{
+  padding-right: 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.resetable__reset{
+  position: absolute;
+    right: 8px;
+    top: 11px;
+    width: 30px;
+    height: 30px;
+    padding: 3px 7px;
+    font-style: normal;
+    font-size: 1.2em;
+    user-select: none;
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 50%;
+}
+
 /* main page */
 
 .list-books-title {

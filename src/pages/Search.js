@@ -28,12 +28,21 @@ const Search = (props) => {
         <div className="search-books">
             <div className="search-books-bar">
               <Link className="close-search" to="../">Close</Link>
-              <div className="search-books-input-wrapper">
+              <div className="search-books-input-wrapper resetable">
                 <input
                 value = {text}
                 onChange = {(e)=>{settext(e.target.value)}}
                 type="text"
                 placeholder="Search by title or author"/>
+                {
+                    text !== '' &&
+                    <button
+                    onClick={()=>{settext('')}}
+                    className="resetable__reset">
+
+                        <i>×</i>
+                    </button>
+                }
 
               </div>
             </div>

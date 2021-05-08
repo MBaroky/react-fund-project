@@ -16,6 +16,12 @@ const useSelectChange = (shelf, book, setshelves) => {
     }, [shelf, book, setshelves]);
 }
 
+const custSetShelf = (book, shelves) => {
+    book.shelf = !book.shelf ? Object.keys(shelves).filter((shelf, i) => shelves[shelf].includes(book.id))[0] || 'none'
+    : book.shelf;
+    return book.shelf
+}
+
 function ShelfChanger(props) {
 
     const {book, shelves, setshelves} = props;
@@ -28,12 +34,6 @@ function ShelfChanger(props) {
 
     return (
         <div className="book-shelf-changer">
-            {
-            book.shelf
-            ?
-             console.log(book.shelf)
-             : book.shelf = Object.keys(shelves).filter((shelf, i) => shelves[shelf].includes(book.id))[0] || 'none'
-            }
             <select
             defaultValue='move'
             onChange={(e)=>{
@@ -53,19 +53,19 @@ function ShelfChanger(props) {
 
                 {Object.keys(shelves).map((shelf)=>(
                     <option
-                    disabled={book.shelf === shelf}
+                    disabled={custSetShelf(book, shelves) === shelf}
                     value={shelf}
                     key={shelf}>
                        {
-                        book.shelf === shelf && '✓'
+                        custSetShelf(book, shelves) === shelf && '✓'
                     } {shelvesNames[shelf]}
                     </option>
                 ))}
             <option
             style={{color:'red'}}
-            disabled={book.shelf === 'none'}
+            disabled={custSetShelf(book, shelves) === 'none'}
             value="none">
-            {book.shelf === 'none' && '✓'} None</option>
+            {custSetShelf(book, shelves) === 'none' && '✓'} None</option>
             </select>
         </div>
     )
