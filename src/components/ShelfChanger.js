@@ -1,4 +1,4 @@
-import {useEffect, useState, useRef} from 'react'
+import {useEffect, useState} from 'react'
 import * as BooksAPI from '../BooksAPI'
 import shelvesNames from '../components/ShelvesNames'
 
@@ -9,30 +9,23 @@ function ShelfChanger(props) {
     const {book, shelves, setshelves} = props;
     const [shelf, setshelf] = useState(book.shelf);
 
-    // updating book's shelf
-    const isInitialMount = useRef(true);
 
     useEffect(() => {
-        isInitialMount.current
-            ? isInitialMount.current = false
-            : shelf !== book.shelf && BooksAPI.update(book, shelf)
-             .then(res => {
-                 console.log(res)
-                 setshelves(res)
-             })
+        shelf !== book.shelf && BooksAPI.update(book, shelf)
+            .then(res => {
+                setshelves(res)
+            })
     }, [shelf, book, setshelves]);
 
 
     return (
         <div className="book-shelf-changer">
-            {!book.shelf
+            {
+            book.shelf
             ?
-            // book.shelf=
-            console.log(
-                book.id
-                // Object.keys(shelves).filter((shelf, i) => shelves[shelf].includes(book.id))[0]
-            )
-            : console.log(book.shelf)}
+             console.log(book.shelf)
+             : book.shelf = Object.keys(shelves).filter((shelf, i) => shelves[shelf].includes(book.id))[0] || 'none'
+            }
             <select
             defaultValue='move'
             onChange={(e)=>{setshelf(e.target.value)}}
@@ -57,7 +50,11 @@ function ShelfChanger(props) {
                     } {shelvesNames[shelf]}
                     </option>
                 ))}
-            <option style={{color:'red'}} value="none">None</option>
+            <option
+            style={{color:'red'}}
+            disabled={book.shelf === 'none'}
+            value="none">
+            {book.shelf === 'none' && '✓'} None</option>
             </select>
         </div>
     )

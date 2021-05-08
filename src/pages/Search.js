@@ -23,7 +23,7 @@ const Search = (props) => {
         return ()=>{
             console.log('cleanup')
         }
-    }, [text])
+    }, [text, shelves])
     return (
         <div className="search-books">
             <div className="search-books-bar">
@@ -39,12 +39,12 @@ const Search = (props) => {
             </div>
             <div className="search-books-results">
                 {
-                (error === '' && searchList)?
+                (error === '' && searchList && text !=='')?
                 (<BooksList list={searchList} shelves={shelves} setshelves={setshelves} />)
                 :(
                 <div
                 className="centered">
-                    <h2>{error}</h2>
+                    <h2>{error ? 'wrong Query' : 'empty search'}</h2>
                     <p>use on of the following keywords</p>
                     <ul
                     style={{

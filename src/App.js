@@ -18,8 +18,8 @@ function App() {
   // List of shelves
   const shelvesInit = {
     currentlyReading:[],
-    read: [],
-    wantToRead: []
+    wantToRead: [],
+    read: []
   }
 
     const [shelves, setshelves] = useState(shelvesInit);
@@ -37,6 +37,9 @@ function App() {
     BooksAPI.getAll()
     .then(data=>{
       setbooksList(data)
+      const shelvesNow = shelves;
+      data.map(book => shelvesNow[book.shelf].push(book.id))
+      setshelves(shelvesNow)
       setisLoading(false)
     });
   }, [shelves]);
