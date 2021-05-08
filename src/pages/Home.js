@@ -1,8 +1,11 @@
 
-import BooksList from '../components/BooksList';
+// import BooksList from '../components/BooksList';
+import ShelComponent from '../components/ShelfComponent';
+import {Link} from 'react-router-dom'
+
 
 function Home(props) {
-    const {shelves, booksList} = props;
+    const {shelves, booksList, setshelves, isLoading} = props;
     return (
         <div className="App">
             <div className="list-books">
@@ -10,14 +13,18 @@ function Home(props) {
                     <h1>MyReads</h1>
                 </div>
                 <div className="list-books-content">
-                    {shelves.map(shelf => {
-                    let booksListPerShelf = booksList.filter(book => book.shelf === shelf.value)
-                    return <BooksList key={shelf.value} shelf={shelf} list={booksListPerShelf} shelves={shelves} />
+
+                    {isLoading
+                        ? <h2 className="centered">___________Loading_________</h2>
+                        :Object.keys(shelves).map(shelf=>{
+
+                        let booksListPerShelf = booksList.filter(book => book.shelf === shelf)
+                        return <ShelComponent key={shelf} shelf={shelf} setshelves={setshelves} list={booksListPerShelf} shelves={shelves} />
                     })}
                 </div>
             </div>
             <div className="open-search">
-                <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
+                <Link to="/search">Add a book</Link>
             </div>
         </div>
     )
