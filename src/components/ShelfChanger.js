@@ -2,22 +2,22 @@ import {useEffect, useState, useRef} from 'react'
 import * as BooksAPI from '../BooksAPI'
 import shelvesNames from '../ShelvesNames'
 
-const useSelectChange = (shelf, book, setshelves) => {
+const useSelectChange = (shelf, book, setshelves, shelves) => {
     const hasJustMounted = useRef(true);
     useEffect(() => {
 
         hasJustMounted.current
         ? hasJustMounted.current = false
-        : shelf !== book.shelf && BooksAPI.update(book, shelf)
+        : shelf !== custSetShelf(book, shelves) && BooksAPI.update(book, shelf)
             .then(res => {
                 !res.error &&
                 setshelves(res)
             })
-    }, [shelf, book, setshelves]);
+    }, [shelf, book, setshelves, shelves]);
 }
 
 const custSetShelf = (book, shelves) => {
-    book.shelf = !book.shelf ? Object.keys(shelves).filter((shelf, i) => shelves[shelf].includes(book.id))[0] || 'none'
+    book.shelf  = !book.shelf ? Object.keys(shelves).filter((shelf, i) => shelves[shelf].includes(book.id))[0] || 'none'
     : book.shelf;
     return book.shelf
 }
@@ -25,7 +25,7 @@ const custSetShelf = (book, shelves) => {
 function ShelfChanger(props) {
 
     const {book, shelves, setshelves} = props;
-    const [shelf, setshelf] = useState(book.shelf);
+    const [shelf, setshelf] = useState(custSetShelf(book, shelves));
 
 
 
