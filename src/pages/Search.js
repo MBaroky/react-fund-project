@@ -20,9 +20,6 @@ const Search = (props) => {
         .then(res =>{
             if(!res.error){setsearchList(res); seterror('')}else{seterror(res.error)}
         })
-        return ()=>{
-            console.log('cleanup')
-        }
     }, [text, shelves])
     return (
         <div className="search-books">

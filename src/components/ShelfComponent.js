@@ -1,5 +1,3 @@
-// import React from 'react'
-
 import shelvesNames from '../ShelvesNames'
 import BooksList from "./BooksList";
 

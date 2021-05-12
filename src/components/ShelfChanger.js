@@ -1,36 +1,34 @@
 import {useEffect, useState, useRef} from 'react'
 import * as BooksAPI from '../BooksAPI'
+import {toast, Flip} from 'react-toastify'
 import shelvesNames from '../ShelvesNames'
 
-const useSelectChange = (shelf, book, setshelves, shelves) => {
+function ShelfChanger(props) {
+
+    const {book, shelves, setshelves} = props;
+    const [shelf, setshelf] = useState(book.shelf);
+
     const hasJustMounted = useRef(true);
     useEffect(() => {
 
         hasJustMounted.current
         ? hasJustMounted.current = false
-        : shelf !== custSetShelf(book, shelves) && BooksAPI.update(book, shelf)
+        : shelf !== book.shelf  && BooksAPI.update(book, shelf)
             .then(res => {
+                console.log(book.id, ': shelf is: ',shelf, 'book.shelf is: ', book.shelf)
                 !res.error &&
+                toast.info(`${shelf !== 'none'?`🔀 ${book.title} moved to shelf: ${shelvesNames[shelf]}!`:`⚠️ ${book.title} removed from shelf:${shelvesNames[book.shelf]}!`}`, {
+                    position: "bottom-left",
+                    transition: Flip
+                    });
                 setshelves(res)
             })
-    }, [shelf, book, setshelves, shelves]);
-}
+    }, [shelf, book, setshelves]);
 
-const custSetShelf = (book, shelves) => {
-    book.shelf  = !book.shelf ? Object.keys(shelves).filter((shelf, i) => shelves[shelf].includes(book.id))[0] || 'none'
+    // setting shelf manually for search results
+    book.shelf  = !book.shelf
+    ? Object.keys(shelves).filter((shelf, i) => shelves[shelf].includes(book.id))[0] || 'none'
     : book.shelf;
-    return book.shelf
-}
-
-function ShelfChanger(props) {
-
-    const {book, shelves, setshelves} = props;
-    const [shelf, setshelf] = useState(custSetShelf(book, shelves));
-
-
-
-    useSelectChange(shelf, book, setshelves)
-
 
     return (
         <div className="book-shelf-changer">
@@ -49,23 +47,22 @@ function ShelfChanger(props) {
                 }}
                 value="move"
                 disabled>Move to...</option>
-
-
                 {Object.keys(shelves).map((shelf)=>(
+
                     <option
-                    disabled={custSetShelf(book, shelves) === shelf}
+                    disabled={book.shelf === shelf}
                     value={shelf}
                     key={shelf}>
                        {
-                        custSetShelf(book, shelves) === shelf && '✓'
+                        book.shelf === shelf && '✓'
                     } {shelvesNames[shelf]}
                     </option>
                 ))}
             <option
             style={{color:'red'}}
-            disabled={custSetShelf(book, shelves) === 'none'}
+            disabled={book.shelf === 'none'}
             value="none">
-            {custSetShelf(book, shelves) === 'none' && '✓'} None</option>
+            {book.shelf === 'none' && '✓'} None</option>
             </select>
         </div>
     )

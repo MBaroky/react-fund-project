@@ -1,5 +1,3 @@
-// import React from 'react'
-
 function BookAuthor(props) {
     const {authors} = props
     return (

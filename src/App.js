@@ -4,8 +4,10 @@ import {
   Route,
   Switch
 } from 'react-router-dom'
+import {ToastContainer} from 'react-toastify'
 import * as BooksAPI from './BooksAPI'
 import './App.css';
+import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/Home';
 import Search from './pages/Search';
 import NotFound from './pages/NotFound';
@@ -48,6 +50,7 @@ function App() {
   // render
   return (
     <Router>
+      <ToastContainer />
       <Switch>
         <Route exact path="/">
           <Home isLoading={isLoading} shelves={shelves} booksList={booksList} setshelves={setshelves} />

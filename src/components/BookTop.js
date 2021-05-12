@@ -1,5 +1,3 @@
-// import React from 'react'
-
 import ShelfChanger from "./ShelfChanger";
 
 function BookTop(props) {
